@@ -1,15 +1,68 @@
 import mongoose from "mongoose";
 
-const connectMongoDB = async () => {
-	try {
-		const conn = await mongoose.connect(process.env.MONGO_URI);
-		console.log(`MongoDB connected: ${conn.connection.host}`);
-	} catch (error) {
-		console.error(`Error connection to mongoDB: ${error.message}`);
-		process.exit(1);
-	}
-};
+const userSchema = new mongoose.Schema(
+	{
+		username: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		fullname: {
+			type: String,
+			required: true,
+		},
+		password: {
+			type: String,
+			required: true,
+			minLength: 6,
+		},
+		email: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		followers: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "User",
+				default: [],
+			},
+		],
+		following: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "User",
+				default: [],
+			},
+		],
+		profileImg: {
+			type: String,
+			default: "",
+		},
+		coverImg: {
+			type: String,
+			default: "",
+		},
+		bio: {
+			type: String,
+			default: "",
+		},
 
+		link: {
+			type: String,
+			default: "",
+		},
+		likedPosts: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Post",
+				default: [],
+			},
+		],
+	},
+	{ timestamps: true }
+);
 
+const User = mongoose.model("User", userSchema);
 
-export default connectMongoDB;
+export default User;
