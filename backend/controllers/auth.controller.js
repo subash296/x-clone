@@ -34,7 +34,6 @@ export const signup = async (req, res) => {
 			email,
 			password: hashedPassword,
 		});
-        
 
 		if (newUser) {
 			generateTokenAndSetCookie(newUser._id, res);
@@ -58,6 +57,7 @@ export const signup = async (req, res) => {
 		res.status(500).json({ error: "Internal Server Error" });
 	}
 };
+
 export const login = async (req, res) => {
 	try {
 		const { username, password } = req.body;
@@ -72,7 +72,7 @@ export const login = async (req, res) => {
 
 		res.status(200).json({
 			_id: user._id,
-			fullName: user.fullName,
+			fullname: user.fullname,
 			username: user.username,
 			email: user.email,
 			followers: user.followers,
