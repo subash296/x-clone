@@ -53,6 +53,25 @@ const ProfilePage = () => {
 			}
 		},
 	});
+	const{data}=useQuery({
+		queryKey:["allPosts"],
+		queryFn:async()=>{
+			try {
+				const res=await fetch("/api/posts/all");
+				const data=await res.json();
+				if(!res.ok){
+					throw new Error(data.error || "Something went wrong");
+				}
+				return data
+			} catch (error) {
+				throw new Error(error.message);
+				
+			}
+		}
+	})
+	const allPost=data.filter(post=>post.user===user?._id)
+
+		
 	const{updateProfile,isUpdatingProfile}=useUpdateUserProfile()
 	const memberSinceDate = formatMemberSinceDate(user?.createdAt);
 	const isMyProfile = authUser._id === user?._id;
@@ -87,7 +106,7 @@ const ProfilePage = () => {
 								</Link>
 								<div className='flex flex-col'>
 									<p className='font-bold text-lg'>{user?.fullname}</p>
-									<span className='text-sm text-slate-500'>{POSTS?.length} posts</span>
+									<span className='text-sm text-slate-500'>{allPost?.length}</span>
 								</div>
 							</div>
 							{/* COVER IMG */}
