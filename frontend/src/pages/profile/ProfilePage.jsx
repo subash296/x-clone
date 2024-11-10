@@ -1,7 +1,7 @@
 import { useRef, useState,useEffect } from "react";
 import { Link,useParams } from "react-router-dom";
-import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { toast } from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
+
 
 import Posts from "../../components/common/Posts";
 import ProfileHeaderSkeleton from "../../components/skeletons/ProfileHeaderSkeleton";
@@ -10,7 +10,7 @@ import useFollow from "../../hooks/useFollow";
 
 import { formatMemberSinceDate } from "../../utils/date";
 
-import { POSTS } from "../../utils/db/dummy";
+
 
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
